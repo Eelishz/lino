@@ -18,6 +18,16 @@ var tmpl *template.Template
 
 var funcMap template.FuncMap = template.FuncMap{
 	"timeNow": time.Now,
+	"html": func(s any) template.HTML {
+		switch v := s.(type) {
+		case string:
+			return template.HTML(v)
+		case []byte:
+			return template.HTML(v)
+		default:
+			return template.HTML(fmt.Sprint(v))
+		}
+	},
 }
 
 func reportError(err error) {
