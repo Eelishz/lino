@@ -40,6 +40,16 @@ func RenderTemplate(name string, data interface{}, w io.Writer) {
 	}
 }
 
+func RenderTemplateFile(name string, data interface{}, path string) {
+	f, err := os.Create(path)
+	if err != nil {
+		fmt.Println("ERROR:", err)
+		os.Exit(1)
+	}
+	defer f.Close()
+	RenderTemplate(name, data, f)
+}
+
 func RenderMarkdown(data []byte) string {
 	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
 	p := parser.NewWithExtensions(extensions)
