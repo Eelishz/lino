@@ -98,6 +98,16 @@ func CreateDirectory(p string) {
 	}
 }
 
+func RemoveDirectoryIfExists(p string) {
+	if _, err := os.Stat(p); err == nil {
+		err = os.RemoveAll(p)
+		if err != nil {
+			fmt.Println("ERROR:", err)
+			os.Exit(1)
+		}
+	}
+}
+
 func RunCommand(cmd string, args ...string) {
 	c := exec.Command(cmd, args...)
 	c.Stdout = os.Stdout
